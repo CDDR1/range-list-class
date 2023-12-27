@@ -20,22 +20,21 @@ class RangeList {
    * @returns a new array with merged ranges.
    */
   mergeRanges(ranges) {
-    const mergedRanges = [];
+    return ranges.reduce((mergedRanges, [rangeStart, rangeEnd]) => {
+      const lastRange = mergedRanges[mergedRanges.length - 1];
 
-    for (const range of ranges) {
-      const [start, end] = range;
-      if (mergedRanges.length > 0 && start <= mergedRanges[mergedRanges.length - 1][1]) {
-        mergedRanges[mergedRanges.length - 1][1] = Math.max(end, mergedRanges[mergedRanges.length - 1][1]);
+      if (lastRange && rangeStart <= lastRange[1]) {
+        lastRange[1] = Math.max(rangeEnd, lastRange[1]);
       } else {
-        mergedRanges.push(range);
+        mergedRanges.push([rangeStart, rangeEnd]);
       }
-    }
 
-    return mergedRanges;
+      return mergedRanges;
+    }, []);
   }
 
   /**
-   * 
+   *
    * Sorts list of ranges by the start number.
    * @param {Array<number>} ranges - FIX LATER
    * @returns {Array<number>} - FIX LATER
