@@ -15,13 +15,25 @@ class RangeList {
 
   /**
    *
+   * Adds a range to the list.
+   * @param {Array<number>} range - Array of two integers that specify beginning and end of range.
+   */
+  add(range) {
+    if (range[0] === range[1]) return;
+    const newRangeList = [...this.rangeList, range];
+    const newSortedRangeList = this.sortRanges(newRangeList);
+    this.rangeList = this.mergeRanges(newSortedRangeList);
+  }
+
+  /**
+   *
    * Merges the overlapping ranges in the list.
    * @param {Array{Array<number>}} ranges - Array of arrays... FIX THIS COMMENT LATER!!!
    * @returns a new array with merged ranges.
    */
   mergeRanges(ranges) {
     return ranges.reduce((mergedRanges, [rangeStart, rangeEnd]) => {
-      // If 'mergedRanges' is empty, 'lastRange' will be 'undefined'.
+      // 'lastRange' will be 'undefined' if 'mergedRanges' is empty.
       const lastRange = mergedRanges[mergedRanges.length - 1];
 
       if (lastRange && rangeStart <= lastRange[1]) {
@@ -48,24 +60,10 @@ class RangeList {
 
   /**
    *
-   * Adds a range to the list.
-   * @param {Array<number>} range - Array of two integers that specify beginning and end of range.
-   */
-  add(range) {
-    // Empty range, nothing to add.
-    if (range[0] === range[1]) return;
-    const newRangeList = [...this.rangeList, range];
-    const newSortedRangeList = this.sortRanges(newRangeList);
-    this.rangeList = this.mergeRanges(newSortedRangeList);
-  }
-
-  /**
-   *
    * Removes a range from the list.
    * @param {Array<number>} range - Array of two integers that specify beginning and end of range.
    */
   remove(range) {
-    // Empty range, nothing to add.
     if (range[0] === range[1]) return;
     const [startToBeRemoved, endToBeRemoved] = range;
 
@@ -94,7 +92,9 @@ class RangeList {
    * @returns A string representation of the range list
    */
   toString() {
-    return this.rangeList.map(([start, end]) => `[${start}, ${end})`).join(" ");
+    if (this.rangeList.length === 0) return "";
+    
+    return this.rangeList.map(([rangeStart, rangeEnd]) => `[${rangeStart}, ${rangeEnd})`).join(" ");
   }
 }
 
