@@ -72,7 +72,7 @@ class RangeList {
 
     this.rangeList = this.rangeList.reduce((newRangeList, [start, end]) => {
       // If the range is non-overlapping, we keep the entire range.
-      if (this.isNonOverlapping(start, end, startToBeRemoved, endToBeRemoved)) {
+      if (end < startToBeRemoved || start > endToBeRemoved) {
         newRangeList.push([start, end]);
       } else {
         // We keep the left part if it does not overlap.
@@ -87,16 +87,6 @@ class RangeList {
 
       return newRangeList;
     }, []);
-  }
-
-  /**
-   *
-   * @param {Array<number>} range
-   * @param {Array<number>} rangeToBeRemoved
-   * @returns {boolean}
-   */
-  isNonOverlapping(start, end, startToBeRemoved, endToBeRemoved) {
-    return end < startToBeRemoved || start > endToBeRemoved;
   }
 
   /**
