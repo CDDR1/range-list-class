@@ -21,7 +21,7 @@ class RangeList {
    */
   mergeRanges(ranges) {
     // TODO: potentially move the sorting to a different method.
-    const sortedRanges = [...ranges].sort((rangeA, rangeB) => rangeA[0] - rangeB[0]);
+    const sortedRanges = [...ranges].sort((firstRange, secondRange) => firstRange[0] - secondRange[0]);
     const mergedRanges = [];
 
     for (const range of sortedRanges) {
