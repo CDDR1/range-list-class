@@ -67,18 +67,18 @@ class RangeList {
     if (range[0] === range[1]) return;
     const [startToBeRemoved, endToBeRemoved] = range;
 
-    this.rangeList = this.rangeList.reduce((newRangeList, [start, end]) => {
+    this.rangeList = this.rangeList.reduce((newRangeList, [rangeStart, rangeEnd]) => {
       // If the range is non-overlapping, we keep the entire range.
-      if (end < startToBeRemoved || start > endToBeRemoved) {
-        newRangeList.push([start, end]);
+      if (rangeEnd < startToBeRemoved || rangeStart > endToBeRemoved) {
+        newRangeList.push([rangeStart, rangeEnd]);
       } else {
         // Keep the left part if it does not overlap.
-        if (start < startToBeRemoved) {
-          newRangeList.push([start, startToBeRemoved]);
+        if (rangeStart < startToBeRemoved) {
+          newRangeList.push([rangeStart, startToBeRemoved]);
         }
         // Keep the right part if it does not overlap.
-        if (end > endToBeRemoved) {
-          newRangeList.push([endToBeRemoved, end]);
+        if (rangeEnd > endToBeRemoved) {
+          newRangeList.push([endToBeRemoved, rangeEnd]);
         }
       }
 
