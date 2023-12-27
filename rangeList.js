@@ -21,11 +21,13 @@ class RangeList {
    */
   mergeRanges(ranges) {
     return ranges.reduce((mergedRanges, [rangeStart, rangeEnd]) => {
-      const lastRange = mergedRanges[mergedRanges.length - 1];
+      const lastRange = mergedRanges.length > 0 ? mergedRanges[mergedRanges.length - 1] : undefined;
 
       if (lastRange && rangeStart <= lastRange[1]) {
+        // Merge overlapping ranges.
         lastRange[1] = Math.max(rangeEnd, lastRange[1]);
       } else {
+        // Add non-overlapping range.
         mergedRanges.push([rangeStart, rangeEnd]);
       }
 
