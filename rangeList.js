@@ -1,12 +1,3 @@
-// Task: Implement a class named 'RangeList'
-// A pair of integers define a range, for example: [1, 5). This range includes integers: 1, 2, 3, and 4.
-// A range list is an aggregate of these ranges: [1, 5), [10, 11), [100, 201)
-
-/**
- *
- * NOTE: Feel free to add any extra member variables/functions you like.
- */
-
 /**
  *
  * Represents a range list.
@@ -79,11 +70,11 @@ class RangeList {
       if (start > endToBeRemoved || end < startToBeRemoved) {
         newRangeList.push([start, end]);
       } else {
-        // Right side overlaps but we can add left side.
+        // Right side overlaps but we can keep the left side.
         if (start < startToBeRemoved) {
           newRangeList.push([start, startToBeRemoved]);
         }
-        // Left side overlaps but we can add right side.
+        // Left side overlaps but we can keep the right side.
         if (end > endToBeRemoved) {
           newRangeList.push([endToBeRemoved, end]);
         }
