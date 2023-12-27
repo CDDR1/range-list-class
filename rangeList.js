@@ -20,11 +20,9 @@ class RangeList {
    * @returns a new array with merged ranges.
    */
   mergeRanges(ranges) {
-    // TODO: potentially move the sorting to a different method.
-    const sortedRanges = [...ranges].sort((firstRange, secondRange) => firstRange[0] - secondRange[0]);
     const mergedRanges = [];
 
-    for (const range of sortedRanges) {
+    for (const range of ranges) {
       const [start, end] = range;
       if (mergedRanges.length > 0 && start <= mergedRanges[mergedRanges.length - 1][1]) {
         mergedRanges[mergedRanges.length - 1][1] = Math.max(end, mergedRanges[mergedRanges.length - 1][1]);
@@ -37,6 +35,16 @@ class RangeList {
   }
 
   /**
+   * 
+   * Sorts list of ranges by the start number.
+   * @param {Array<number>} ranges - FIX LATER
+   * @returns {Array<number>} - FIX LATER
+   */
+  sortRanges(ranges) {
+    return ranges.sort((rangeOne, rangeTwo) => rangeOne[0] - rangeTwo[0]);
+  }
+
+  /**
    *
    * Adds a range to the list.
    * @param {Array<number>} range - Array of two integers that specify beginning and end of range.
@@ -44,7 +52,8 @@ class RangeList {
   add(range) {
     if (range[0] === range[1]) return;
     const newRangeList = [...this.rangeList, range];
-    this.rangeList = this.mergeRanges(newRangeList);
+    const newSortedRangeList = this.sortRanges(newRangeList);
+    this.rangeList = this.mergeRanges(newSortedRangeList);
   }
 
   /**
