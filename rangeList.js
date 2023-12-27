@@ -21,6 +21,8 @@ class RangeList {
    */
   mergeRanges(ranges) {
     return ranges.reduce((mergedRanges, [rangeStart, rangeEnd]) => {
+      // Assigning 'lastRange' to 'mergedRanges[mergedRanges.length - 1]' will be 'undefined' 
+      // by default if mergedRanges is empty, but I added a ternary operator for readability.
       const lastRange = mergedRanges.length > 0 ? mergedRanges[mergedRanges.length - 1] : undefined;
 
       if (lastRange && rangeStart <= lastRange[1]) {
@@ -51,6 +53,7 @@ class RangeList {
    * @param {Array<number>} range - Array of two integers that specify beginning and end of range.
    */
   add(range) {
+    // Empty range, nothing to add.
     if (range[0] === range[1]) return;
     const newRangeList = [...this.rangeList, range];
     const newSortedRangeList = this.sortRanges(newRangeList);
@@ -63,6 +66,7 @@ class RangeList {
    * @param {Array<number>} range - Array of two integers that specify beginning and end of range.
    */
   remove(range) {
+    // Empty range, nothing to add.
     if (range[0] === range[1]) return;
     const [startToBeRemoved, endToBeRemoved] = range;
 
