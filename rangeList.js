@@ -40,6 +40,7 @@ class RangeList {
    * @returns a new array with merged ranges.
    */
   mergeRanges(ranges) {
+    // TODO: potentially move the sorting to a different method.
     const sortedRanges = [...ranges].sort(this.sortRangesByStartNumber);
     const mergedRanges = [];
     for (const range of sortedRanges) {
@@ -71,6 +72,24 @@ class RangeList {
    */
   remove(range) {
     if (range[0] === range[1]) return;
+    const [startToBeRemoved, endToBeRemoved] = range;
+    const newRangeList = [];
+    for (const [start, end] of this.rangeList) {
+      // The range to be removed does not overlap with the current range.
+      if (start > endToBeRemoved || end < startToBeRemoved) {
+        newRangeList.push([start, end]);
+      } else {
+        // Right side overlaps but we can add left side.
+        if (start < startToBeRemoved) {
+          newRangeList.push([start, startToBeRemoved]);
+        }
+        // Left side overlaps but we can add right side.
+        if (end > endToBeRemoved) {
+          newRangeList.push([endToBeRemoved, end]);
+        }
+      }
+    }
+    this.rangeList = newRangeList;
   }
 
   /**
@@ -85,25 +104,27 @@ class RangeList {
 }
 // Example run
 const rl = new RangeList();
-rl.toString(); // Should be ""
+console.log(rl.toString()); // Should be ""
 rl.add([1, 5]);
-rl.toString(); // Should be: "[1, 5)"
+console.log(rl.toString()); // Should be: "[1, 5)"
 rl.add([10, 20]);
-rl.toString(); // Should be: "[1, 5) [10, 20)"
+console.log(rl.toString()); // Should be: "[1, 5) [10, 20)"
 rl.add([20, 20]);
-rl.toString(); // Should be: "[1, 5) [10, 20)"
+console.log(rl.toString()); // Should be: "[1, 5) [10, 20)"
 rl.add([20, 21]);
-rl.toString(); // Should be: "[1, 5) [10, 21)"
+console.log(rl.toString()); // Should be: "[1, 5) [10, 21)"
 rl.add([2, 4]);
-rl.toString(); // Should be: "[1, 5) [10, 21)"
+console.log(rl.toString()); // Should be: "[1, 5) [10, 21)"
 rl.add([3, 8]);
-const res = rl.toString(); // Should be: "[1, 8) [10, 21)"
-console.log(res);
-// rl.remove([10, 10]);
-// rl.toString(); // Should be: "[1, 8) [10, 21)"
-// rl.remove([10, 11]);
-// rl.toString(); // Should be: "[1, 8) [11, 21)"
-// rl.remove([15, 17]);
-// rl.toString(); // Should be: "[1, 8) [11, 15) [17, 21)"
-// rl.remove([3, 19]);
-// rl.toString(); // Should be: "[1, 3) [19, 21)"
+console.log(rl.toString()); // Should be: "[1, 8) [10, 21)"
+
+console.log("------------------");
+
+rl.remove([10, 10]);
+console.log(rl.toString()); // Should be: "[1, 8) [10, 21)"
+rl.remove([10, 11]);
+console.log(rl.toString()); // Should be: "[1, 8) [11, 21)"
+rl.remove([15, 17]);
+console.log(rl.toString()); // Should be: "[1, 8) [11, 15) [17, 21)"
+rl.remove([3, 19]);
+console.log(rl.toString()); // Should be: "[1, 3) [19, 21)"
