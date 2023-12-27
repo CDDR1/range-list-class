@@ -15,25 +15,15 @@ class RangeList {
 
   /**
    *
-   * Function description FIX LATER!
-   * @param {Array<number>} range1 - Array representing the first range.
-   * @param {Array<number>} range2 - Array representing the second range.
-   * @returns {number} - Negative if range1 should come before range2, positive if range2 should come before range1, 0 if equal.
-   */
-  sortRangesByStartNumber(range1, range2) {
-    return range1[0] - range2[0];
-  }
-
-  /**
-   *
    * Merges the overlapping ranges in the list.
    * @param {Array{Array<number>}} ranges - Array of arrays... FIX THIS COMMENT LATER!!!
    * @returns a new array with merged ranges.
    */
   mergeRanges(ranges) {
     // TODO: potentially move the sorting to a different method.
-    const sortedRanges = [...ranges].sort(this.sortRangesByStartNumber);
+    const sortedRanges = [...ranges].sort((rangeA, rangeB) => rangeA[0] - rangeB[0]);
     const mergedRanges = [];
+
     for (const range of sortedRanges) {
       const [start, end] = range;
       if (mergedRanges.length > 0 && start <= mergedRanges[mergedRanges.length - 1][1]) {
@@ -42,6 +32,7 @@ class RangeList {
         mergedRanges.push(range);
       }
     }
+
     return mergedRanges;
   }
 
@@ -64,6 +55,7 @@ class RangeList {
   remove(range) {
     if (range[0] === range[1]) return;
     const [startToBeRemoved, endToBeRemoved] = range;
+
     this.rangeList = this.rangeList.reduce((newRangeList, [start, end]) => {
       // If the range is non-overlapping, we keep the entire range.
       if (this.isNonOverlapping(start, end, startToBeRemoved, endToBeRemoved)) {
@@ -78,6 +70,7 @@ class RangeList {
           newRangeList.push([endToBeRemoved, end]);
         }
       }
+
       return newRangeList;
     }, []);
   }
