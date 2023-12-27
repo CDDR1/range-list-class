@@ -66,7 +66,7 @@ class RangeList {
     const [startToBeRemoved, endToBeRemoved] = range;
     const newRangeList = [];
     for (const [start, end] of this.rangeList) {
-      // The range to be removed does not overlap with the current range.
+      // The range to be removed does not overlap with the current range, so we keep it.
       if (start > endToBeRemoved || end < startToBeRemoved) {
         newRangeList.push([start, end]);
       } else {
@@ -89,8 +89,7 @@ class RangeList {
    * @returns A string representation of the range list
    */
   toString() {
-    const rangeListString = this.rangeList.map(([start, end]) => `[${start}, ${end})`).join(" ");
-    return rangeListString;
+    return this.rangeList.map(([start, end]) => `[${start}, ${end})`).join(" ");
   }
 }
 // Example run
