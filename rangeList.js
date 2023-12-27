@@ -64,23 +64,32 @@ class RangeList {
   remove(range) {
     if (range[0] === range[1]) return;
     const [startToBeRemoved, endToBeRemoved] = range;
-    const newRangeList = [];
-    for (const [start, end] of this.rangeList) {
-      // The range to be removed does not overlap with the current range, so we keep it.
-      if (start > endToBeRemoved || end < startToBeRemoved) {
+    this.rangeList = this.rangeList.reduce((newRangeList, [start, end]) => {
+      // If the range is non-overlapping, we keep the entire range.
+      if (this.isNonOverlapping(start, end, startToBeRemoved, endToBeRemoved)) {
         newRangeList.push([start, end]);
       } else {
-        // Right side overlaps but we can keep the left side.
+        // We keep the left part if it does not overlap.
         if (start < startToBeRemoved) {
           newRangeList.push([start, startToBeRemoved]);
         }
-        // Left side overlaps but we can keep the right side.
+        // We keep the right part if it does not overlap.
         if (end > endToBeRemoved) {
           newRangeList.push([endToBeRemoved, end]);
         }
       }
-    }
-    this.rangeList = newRangeList;
+      return newRangeList;
+    }, []);
+  }
+
+  /**
+   *
+   * @param {Array<number>} range
+   * @param {Array<number>} rangeToBeRemoved
+   * @returns {boolean}
+   */
+  isNonOverlapping(start, end, startToBeRemoved, endToBeRemoved) {
+    return end < startToBeRemoved || start > endToBeRemoved;
   }
 
   /**
@@ -92,6 +101,7 @@ class RangeList {
     return this.rangeList.map(([start, end]) => `[${start}, ${end})`).join(" ");
   }
 }
+
 // Example run
 const rl = new RangeList();
 console.log(rl.toString()); // Should be ""
@@ -108,13 +118,13 @@ console.log(rl.toString()); // Should be: "[1, 5) [10, 21)"
 rl.add([3, 8]);
 console.log(rl.toString()); // Should be: "[1, 8) [10, 21)"
 
-console.log("------------------");
+console.log("--------------");
 
 rl.remove([10, 10]);
 console.log(rl.toString()); // Should be: "[1, 8) [10, 21)"
 rl.remove([10, 11]);
 console.log(rl.toString()); // Should be: "[1, 8) [11, 21)"
 rl.remove([15, 17]);
-console.log(rl.toString()); // Should be: "[1, 8) [11, 15) [17, 21)"
+console.log(rl.toString()); // Should be: "[1, 8) [11, 15) [17, 21)
 rl.remove([3, 19]);
 console.log(rl.toString()); // Should be: "[1, 3) [19, 21)"
