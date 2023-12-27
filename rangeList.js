@@ -21,9 +21,8 @@ class RangeList {
    */
   mergeRanges(ranges) {
     return ranges.reduce((mergedRanges, [rangeStart, rangeEnd]) => {
-      // Assigning 'lastRange' to 'mergedRanges[mergedRanges.length - 1]' will be 'undefined' 
-      // by default if mergedRanges is empty, but I added a ternary operator for readability.
-      const lastRange = mergedRanges.length > 0 ? mergedRanges[mergedRanges.length - 1] : undefined;
+      // If 'mergedRanges' is empty, 'lastRange' will be 'undefined'.
+      const lastRange = mergedRanges[mergedRanges.length - 1];
 
       if (lastRange && rangeStart <= lastRange[1]) {
         // Merge overlapping ranges.
@@ -75,11 +74,11 @@ class RangeList {
       if (end < startToBeRemoved || start > endToBeRemoved) {
         newRangeList.push([start, end]);
       } else {
-        // We keep the left part if it does not overlap.
+        // Keep the left part if it does not overlap.
         if (start < startToBeRemoved) {
           newRangeList.push([start, startToBeRemoved]);
         }
-        // We keep the right part if it does not overlap.
+        // Keep the right part if it does not overlap.
         if (end > endToBeRemoved) {
           newRangeList.push([endToBeRemoved, end]);
         }
