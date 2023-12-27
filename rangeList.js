@@ -93,7 +93,7 @@ class RangeList {
    */
   toString() {
     if (this.rangeList.length === 0) return "";
-    
+
     return this.rangeList.map(([rangeStart, rangeEnd]) => `[${rangeStart}, ${rangeEnd})`).join(" ");
   }
 }
