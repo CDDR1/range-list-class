@@ -3,7 +3,7 @@
  * Represents a range list.
  * @class
  */
-class RangeList {
+export default class RangeList {
   /**
    *
    * Initializes the list.
