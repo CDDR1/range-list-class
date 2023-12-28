@@ -1,4 +1,4 @@
-import RangeList from "../rangeList.js";
+import RangeList from "../RangeList.js";
 
 describe("RangeList", () => {
   let rl = null;
