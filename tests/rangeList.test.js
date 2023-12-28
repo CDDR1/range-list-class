@@ -11,9 +11,11 @@ describe("RangeList", () => {
     test("adding non-overlapping ranges", () => {
       rl.add([4, 9]);
       rl.add([0, 2]);
+      rl.add([-3, -1]);
       rl.add([12, 15]);
 
       expect(rl.rangeList).toStrictEqual([
+        [-3, -1],
         [0, 2],
         [4, 9],
         [12, 15],
@@ -23,9 +25,13 @@ describe("RangeList", () => {
     test("adding overlapping ranges", () => {
       rl.add([4, 9]);
       rl.add([6, 12]);
-      rl.add([1, 5]);
+      rl.add([-2, 3]);
+      rl.add([12, 14]);
 
-      expect(rl.rangeList).toStrictEqual([[1, 12]]);
+      expect(rl.rangeList).toStrictEqual([
+        [-2, 3],
+        [4, 14],
+      ]);
     });
 
     test("adding duplicate ranges", () => {
@@ -132,12 +138,13 @@ describe("RangeList", () => {
 
     test("merging overlapping ranges", () => {
       const list = rl.mergeRanges([
+        [-3, 3],
         [1, 4],
         [2, 8],
-        [5, 10],
+        [8, 10],
       ]);
 
-      expect(list).toStrictEqual([[1, 10]]);
+      expect(list).toStrictEqual([[-3, 10]]);
     });
 
     test("merging empty list", () => {
@@ -152,10 +159,12 @@ describe("RangeList", () => {
       const list = rl.sortRanges([
         [3, 7],
         [0, 2],
+        [-2, 0],
         [4, 9],
       ]);
 
       expect(list).toStrictEqual([
+        [-2, 0],
         [0, 2],
         [3, 7],
         [4, 9],
@@ -178,12 +187,14 @@ describe("RangeList", () => {
 
     it("should not change an already sorted list of ranges", () => {
       const list = rl.sortRanges([
+        [-5, -2],
         [1, 3],
         [4, 5],
         [7, 9],
       ]);
 
       expect(list).toStrictEqual([
+        [-5, -2],
         [1, 3],
         [4, 5],
         [7, 9],
@@ -193,9 +204,7 @@ describe("RangeList", () => {
 
   describe("isValidRange method", () => {
     it("should return true if the input is a two integer array", () => {
-      const isValid = rl.isValidRange([1, 2]);
-
-      expect(isValid).toBe(true);
+      expect(rl.isValidRange([1, 2])).toBe(true);
     });
 
     it("should return false if the input is not a non-decreasing two integer array", () => {
@@ -214,11 +223,12 @@ describe("RangeList", () => {
     });
 
     it("should convert a non-empty list of ranges to a string", () => {
+      rl.add([-3, -1]);
       rl.add([1, 4]);
       rl.add([7, 9]);
       rl.add([10, 11]);
 
-      expect(rl.toString()).toBe("[1, 4) [7, 9) [10, 11)");
+      expect(rl.toString()).toBe("[-3, -1) [1, 4) [7, 9) [10, 11)");
     });
   });
 });
