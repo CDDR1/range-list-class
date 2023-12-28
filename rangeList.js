@@ -58,7 +58,7 @@ class RangeList {
    *
    * Sorts a list of ranges in ascending order by the start number.
    * @param {Array<Array<number>>} ranges - Array of arrays representing ranges to be sorted.
-   * @returns {Array<Array<number>>} - A new array with sorted ranges.
+   * @returns {Array<Array<number>>} - A new sorted array of ranges.
    */
   sortRanges(ranges) {
     return ranges.sort((rangeOne, rangeTwo) => rangeOne[0] - rangeTwo[0]);
@@ -116,7 +116,7 @@ class RangeList {
 
   /**
    *
-   * Convert the list of ranges in the range list to a string
+   * Converts the list of ranges in the range list to a string
    * @returns {string} - A string representation of the range list
    */
   toString() {
