@@ -126,8 +126,3 @@ class RangeList {
     return this.rangeList.map(([rangeStart, rangeEnd]) => `[${rangeStart}, ${rangeEnd})`).join(" ");
   }
 }
-
-// Example run
-const rl = new RangeList();
-rl.remove([1,2])
-console.log(rl.toString());
