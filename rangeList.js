@@ -33,9 +33,9 @@ class RangeList {
 
   /**
    *
-   * Merges the overlapping ranges in the list.
-   * @param {Array{Array<number>}} ranges - Array of arrays... FIX THIS COMMENT LATER!!!
-   * @returns a new array with merged ranges.
+   * Merges overlapping ranges in the list.
+   * @param {Array<Array<number>>} ranges - Array of arrays representing ranges.
+   * @returns {Array<Array<number>>} - A new array with merged ranges.
    */
   mergeRanges(ranges) {
     return ranges.reduce((mergedRanges, [rangeStart, rangeEnd]) => {
@@ -56,9 +56,9 @@ class RangeList {
 
   /**
    *
-   * Sorts list of ranges asc by the start number.
-   * @param {Array<number>} ranges - FIX LATER
-   * @returns {Array<number>} - FIX LATER
+   * Sorts a list of ranges in ascending order by the start number.
+   * @param {Array<Array<number>>} ranges - Array of arrays representing ranges to be sorted.
+   * @returns {Array<Array<number>>} - A new array with sorted ranges.
    */
   sortRanges(ranges) {
     return ranges.sort((rangeOne, rangeTwo) => rangeOne[0] - rangeTwo[0]);
@@ -117,7 +117,7 @@ class RangeList {
   /**
    *
    * Convert the list of ranges in the range list to a string
-   * @returns A string representation of the range list
+   * @returns {string} - A string representation of the range list
    */
   toString() {
     if (this.rangeList.length === 0) return "";
